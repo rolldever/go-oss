@@ -9,21 +9,31 @@ import (
 )
 
 // PutObjectSettings 用来封装 PUT 操作的个性化配置。
+//
+// 其中，通过设置 UsingHTTPS 字段来控制是否使用 HTTPS 协议来执行 PUT 操作。
 type PutObjectSettings struct {
 	ContentType     string
 	ContentEncoding string
 	Disposition     string
 	CalcMD5         bool
+	UsingHTTPS      bool
 }
 
 // NewDefaultPutObjectSettings 创建一个默认的 PutObjectSettings 对象。
-// 如果调用 PutObject 方法上传对象，就会使用这个默认的 PutObjectSettings
+//
+// 如果调用 PutObject 方法上传对象，就会使用这个默认的 PutObjectSettings.
+//
+// 特别的，函数将设置下列字段值:
+//
+// - CalcMD5: true
+// - UsingHTTPS: true
 func NewDefaultPutObjectSettings() *PutObjectSettings {
 	return &PutObjectSettings{
 		ContentType:     ContentTypeBinary,
 		ContentEncoding: "",
 		Disposition:     "",
 		CalcMD5:         true,
+		UsingHTTPS:      true,
 	}
 }
 
@@ -57,7 +67,7 @@ func (bucket *Bucket) PutObjectSettings(payload []byte, objectName string, setti
 	}
 
 	// 构造 HTTP 请求
-	url := bucket.getObjectURL(objectName, true)
+	url := bucket.getObjectURL(objectName, settings.UsingHTTPS)
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(payload))
 	if err != nil {
 		return err
