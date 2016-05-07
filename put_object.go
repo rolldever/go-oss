@@ -57,7 +57,7 @@ func (bucket *Bucket) PutObjectSettings(payload []byte, objectName string, setti
 	}
 
 	// 构造 HTTP 请求
-	url := bucket.GetObjectURL(objectName)
+	url := bucket.getObjectURL(objectName, true)
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(payload))
 	if err != nil {
 		return err

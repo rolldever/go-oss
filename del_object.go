@@ -6,7 +6,7 @@ import (
 
 // DeleteObject 执行 OSS 的 DELETE 操作。
 func (bucket *Bucket) DeleteObject(objectName string) error {
-	req, err := http.NewRequest("DELETE", bucket.GetObjectURL(objectName), nil)
+	req, err := http.NewRequest("DELETE", bucket.getObjectURL(objectName, true), nil)
 	if err != nil {
 		return err
 	}
