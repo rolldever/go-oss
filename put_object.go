@@ -65,7 +65,7 @@ func (bucket *Bucket) PutObjectSettings(payload []byte, objectName string, setti
 
 	req.Header.Set("Content-Type", settings.ContentType)
 	req.ContentLength = int64(len(payload))
-	req.Header.Set("Date", GetDateString())
+	req.Header.Set("Date", RFC1123FormatNow())
 
 	if len(settings.ContentEncoding) > 0 {
 		req.Header.Set("Content-Encoding", settings.ContentEncoding)

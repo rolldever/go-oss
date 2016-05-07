@@ -11,7 +11,7 @@ func (bucket *Bucket) DeleteObject(objectName string) error {
 		return err
 	}
 
-	req.Header.Set("Date", GetDateString())
+	req.Header.Set("Date", RFC1123FormatNow())
 	req.ContentLength = 0
 
 	if bucket.Auth != nil {
