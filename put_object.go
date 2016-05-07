@@ -47,7 +47,7 @@ func (bucket *Bucket) PutObjectSettings(payload []byte, objectName string, setti
 
 	// 如果没有提供 settings，则创建一个默认的 settings
 	if settings == nil {
-		settings = DefaultPutObjectSettings()
+		settings = NewDefaultPutObjectSettings()
 	}
 
 	// 如果 settings 中没有提供任何 ContentType，
